@@ -1,62 +1,37 @@
-import math
-# TO-DO: complete the helper function below to merge 2 sorted arrays
-def merge(arrA, arrB):
-    elements = len(arrA) + len(arrB)
-    merged_arr = [0] * elements
-    print(merged_arr)
-    # Your code here
+def merge(left, right):
+    # set initial left index
+    left_index = 0
+    # set initial right index
+    right_index = 0
+    # the empty sorted list
+    sort = []
+    # keep adding to the list in order
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] < right[right_index]:
+            sort.append(left[left_index])
+            left_index += 1
+        else:
+            sort.append(right[right_index])
+            right_index += 1
+    # combine the two lists together
+    sort += left[left_index:]
+    sort += right[right_index:]
+    return sort
 
-    return merged_arr
 
-# TO-DO: implement the Merge Sort function below recursively
-def merge_sort(arr):
-    # Your code here
-    # if the array is more than 1 item sort
-    main = []
-    if len(arr) > 1:
-        # find the midpoint
-        mid = math.floor(len(arr)/2)
-        # print(mid)
-        # split into two arrays
-        lefthalf = arr[:mid]
-        righthalf = arr[mid:]
-        # print(left)
-        # print(right)
-        merge_sort(lefthalf)
-        merge_sort(righthalf)
-        # left starting point
-        leftstart=0
-        # right starting point
-        rightstart=0
-        # main arr start
-        main=0
-        # go through left and right and put in order to main
-        while leftstart < len(lefthalf) and rightstart < len(righthalf):
-            if lefthalf[leftstart] <= righthalf[rightstart]:
-                arr[main]=lefthalf[leftstart]
-                leftstart=leftstart+1
-            else:
-                arr[main]=righthalf[rightstart]
-                rightstart=rightstart+1
-            main=main+1
+def merge_sort(array):
+    if len(array) <= 1:  # base case
+        return array
 
-        while leftstart < len(lefthalf):
-            arr[main]=lefthalf[leftstart]
-            leftstart=leftstart+1
-            main=main+1
+    # divide array in half and merge sort recursively
+    mid = len(array) // 2
+    left = merge_sort(array[:mid])
+    right = merge_sort(array[mid:])
 
-        while rightstart < len(righthalf):
-            arr[main]=righthalf[rightstart]
-            rightstart=rightstart+1
-            main=main+1
-                
-        
-    # if the array is empty or only has one item return the array as is
-    
-    return arr
+    return merge(left, right)
 
 arr1 = [1, 5, 8, 4, 2, 9, 6, 0, 3, 7]
-print(merge_sort(arr1))
+# print(merge_sort(arr1))
 # STRETCH: implement the recursive logic for merge sort in a way that doesn't 
 # utilize any extra memory
 # In other words, your implementation should not allocate any additional lists 
